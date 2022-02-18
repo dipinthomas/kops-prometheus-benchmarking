@@ -16,7 +16,7 @@ The ansible script will benchmark the cluster and the application against (Reque
 
 # Namespace Architecture
 
-![namespace pod](/image/kops-ingress.png)
+![namespace pod](/images/kops-ingress.png?raw=true "Title")
 
 ## Components Being Used
 
@@ -98,3 +98,6 @@ To implement this task I have used many public resources, you can refer to the b
 * [Nginx Performance](https://www.nginx.com/blog/testing-the-performance-of-nginx-and-nginx-plus-web-servers/)
 
 
+# prometheus graphs
+
+![namespace pod](/images/kops-ingress.png?raw=true width="150" height="280" "Title")
