@@ -16,7 +16,7 @@ The ansible script will benchmark the cluster and the application against (Reque
 
 # Namespace Architecture
 
-![namespace pod](/images/kops-ingress.png?raw=true "Title")
+![namespace pod](/image/kops-ingress.png?raw=true "Title")
 
 ## Components Being Used
 
@@ -100,8 +100,8 @@ To implement this task I have used many public resources, you can refer to the b
 
 # prometheus graphs
 
-![Ingress Requests](/images/ingress_requests.png?raw=true "Ingress Requests") 
+![Ingress Requests](/image/ingress_requests.png?raw=true "Ingress Requests") 
 
-![Ingress Memeory](/images/ingress_memory.png?raw=true "Ingress Memeory") 
+![Ingress Memeory](/image/ingress_memory.png?raw=true "Ingress Memeory") 
 
-![Ingress CPU](/images/ingress_CPU.png?raw=true "Ingress CPU") 
+![Ingress CPU](/image/ingress_CPU.png?raw=true "Ingress CPU") 
