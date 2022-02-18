@@ -100,4 +100,8 @@ To implement this task I have used many public resources, you can refer to the b
 
 # prometheus graphs
 
-![namespace pod](/images/kops-ingress.png?raw=true width="150" height="280" "Title")
+![Ingress Requests](/images/ingress_requests.png?raw=true "Title") <!-- .element height="50%" width="50%" -->
+
+![Ingress Memeory](/images/ingress_memory.png?raw=true "Title") <!-- .element height="50%" width="50%" -->
+
+![Ingress CPU](/images/ingress_CPU.png?raw=true "Title") <!-- .element height="50%" width="50%" -->
