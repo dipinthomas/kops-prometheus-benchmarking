@@ -102,6 +102,6 @@ To implement this task I have used many public resources, you can refer to the b
 
 ![Ingress Requests](/images/ingress_requests.png?raw=true "Title") <!-- .element height="50%" width="50%" -->
 
-![Ingress Memeory](/images/ingress_memory.png = 250x250) 
+![Ingress Memeory](/images/ingress_memory.png) {:height="36px" width="36px"} 
 
 ![Ingress CPU](/images/ingress_CPU.png?raw=true "Title") <!-- .element height="50%" width="50%" -->
