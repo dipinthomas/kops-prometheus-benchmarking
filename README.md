@@ -102,6 +102,6 @@ To implement this task I have used many public resources, you can refer to the b
 
 ![Ingress Requests](/image/ingress_requests.png?raw=true "Ingress Requests") 
 
-![Ingress Memeory](/image/ingress_memory.png?raw=true "Ingress Memeory") 
+![Ingress Memeory](/image/ingress_Memory.png?raw=true "Ingress Memeory") 
 
-![Ingress CPU](/image/ingress_CPU.png?raw=true "Ingress CPU") 
+![Ingress CPU](/image/Ingress_CPU.png?raw=true "Ingress CPU") 
