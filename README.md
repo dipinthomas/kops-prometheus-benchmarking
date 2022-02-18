@@ -74,7 +74,11 @@ Last role to be executed is **generate_report**. CSV file will be created in the
 |*nginx_ingress_controller_nginx_process_requests_total*| Extract requests which is passing through ingress controller|**request.csv**|
 |*nginx_ingress_controller_nginx_process_resident_memory_bytes*|Extract ingres controller memory usage|**memory.csv**|
 |*nginx_ingress_controller_nginx_process_cpu_seconds_total*|Extract ingres controller CPU usage|**cpu.csv**|
-  
+
+### How To Access Prometheus UI
+Using kubectl proxy tunnel is created directly from the system executing ansible scripts to prometheus service over port 9000.
+
+After successful execution of ansible playbook you can access prometheus on [http://localhost:9000](http://localhost:9000)
 
 ## How To Cleanup
 
