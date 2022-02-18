@@ -2,6 +2,5 @@
   gather_facts: true
   roles:
   - role: ingress_and_prometheus/cleanup/
-  - role: create-cluster/cleanup/
-  - role: state-store/cleanup/
-  - role: networking/cleanup/
+  - role: create_cluster/cleanup/
+  - role: state_store/cleanup/

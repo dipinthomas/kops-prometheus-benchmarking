@@ -2,6 +2,13 @@
   command: brew install util-linux
   when: ansible_os_family == 'Darwin'
 
+- name: Install Python dependency
+  pip:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - requests
+  
 - name: Install Benchmark Tool Debian
   apt: 
     name: util-linux
@@ -21,13 +28,12 @@
     name: "{{ packages }}"
   vars:
     packages:
-    #- groupinstall
-    #- "Development Tools"
     - openssl-devel
     - git
     - make
     - unzip
     - gcc
+    - wget
 
 - name: Clone Git Repo
   ansible.builtin.git:
@@ -42,11 +48,15 @@
 - name: Copy Binary
   shell: cp /tmp/wrk/wrk /usr/local/bin/
 
+- name: Extract Ingress Endpoint
+  command: "kubectl get ing foo-bar-ingress --output jsonpath='{.status.loadBalancer.ingress[0].hostname}'"
+  register: endpoint
+
+- name: Export Ingress Endpoint
+  set_fact: ingress_endpoint="{{ endpoint.stdout }}"
+
 - name: Benchmark RPS  
   command: taskset -c 0-21,44-65 wrk -t 44 -c 1000 -d 60s "http://{{ ingress_endpoint }}/bar"
-
-- name: Benchmark TPS
-  command: taskset -c 0-21,44-65 wrk -t 44 -c 1000 -d 60s -H ‘Connection\:\ Close’ https://{{ ingress_endpoint }}:443/bar
 
 - name: Benchmark Throughput
   command: taskset -c 0-21,44-65 wrk -t 44 -c 1000 -d 60s https://{{ ingress_endpoint }}:443/bar/1mb.bin

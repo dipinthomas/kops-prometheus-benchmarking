@@ -1,5 +1,16 @@
 ---
 # tasks file for kops
+- name: Install AWS Collection
+  shell: "ansible-galaxy collection install community.aws"
+
+- name: Install Python dependency
+  pip:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - boto3
+    - requests
+
 - name: Download Kops binaries
   get_url:
     url: "{{ kops_darwin_download_path }}"

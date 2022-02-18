@@ -9,9 +9,6 @@ ssh_public_key: ~/.ssh/id_rsa.pub
 ## Regions / Availability zones
 aws_region: us-east-1
 aws_zones: us-east-1a,us-east-1b
-# Use master_zones if you want your masters in different zones than worker nodes.
-# Useful especially when you want 1 master in single zone but workers in several zones.
-# When not defined, aws_zones will be sued instead
 master_zones: us-east-1a
 
 
@@ -37,23 +34,14 @@ base_image: ubuntu/ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-2020042
 master_size:  t2.medium #m4.xlarge
 master_count: 1
 master_volume_size: 50
-# Use master_max_price if you want to use spot instances.
-# Useful to reduce cost during testing
-#master_max_price: 0.05
-# Use master_profile if you want custom iam policies
-#master_profile: arn:aws:iam::1234567890108:instance-profile/kops-custom-master-role
 
 # Node configuration
 node_size: t2.medium #m4.xlarge
 node_count: 1
 node_volume_size: 50
-# Use node_max_price if you want to use spot instances.
-# Useful to reduce cost during testing
-#node_max_price: 0.05
+
 node_autoscaler_min: 1
 node_autoscaler_max: 6
-# Use node_profile if you want custom iam policies
-#node_profile: arn:aws:iam::1234567890108:instance-profile/kops-custom-node-role
 
 
 ## Tags
@@ -77,10 +65,3 @@ prometheus_namespace: "prometheus"
 prometheus_chart_name: "prometheus"
 
 chart_url: "https://charts.helm.sh/stable"
-
-
-
-# IAM
-iam:
-    allow_container_registry: true
-    legacy: false

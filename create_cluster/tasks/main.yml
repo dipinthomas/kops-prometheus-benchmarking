@@ -7,7 +7,7 @@
   shell: "kops export kubecfg --admin --state={{ state_store }}"
 
 - name: Validating Cluster Wait for 10-15 min
-  shell: "kops validate cluster {{ cluster_name }} --wait 10m"
+  shell: "kops validate cluster {{ cluster_name }} --state={{ state_store }} --wait 10m"
   register: validation_output
   retries: 10
   delay: 30

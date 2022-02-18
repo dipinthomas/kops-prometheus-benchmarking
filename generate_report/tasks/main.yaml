@@ -1,0 +1,22 @@
+
+- name: Download Python Script
+  command: 'wget https://gist.githubusercontent.com/dipinthomas/11cf1a5adbadcb080d0ee19b63bdabb6/raw/b177e195952de33c340ba7b13c12a8e9676ea04a/json_to_csv.py'
+
+- name: Export Nginx Ingress Process Request
+  shell: "curl http://localhost:9000/api/v1/query -d 'query=rate(nginx_ingress_controller_nginx_process_requests_total{namespace=\"{{ ingress_namespace }}\" }[1d])' --output ingress_request.json"
+
+- name: Export Nginx Ingress Memory
+  shell: "curl http://localhost:9000/api/v1/query -d 'query=rate(nginx_ingress_controller_nginx_process_resident_memory_bytes{namespace=\"{{ ingress_namespace }}\" }[1d])' --output ingress_memory.json"
+
+- name: Export Nginx CPU Usage
+  shell: "curl http://localhost:9000/api/v1/query -d 'query=rate(nginx_ingress_controller_nginx_process_cpu_seconds_total[1d])' --output ingress_cpu.json"
+
+- name: Covert to CSV
+  ansible.builtin.command: python3 json_to_csv.py "{{ item.json_file }}" "{{ item.csv_file }}"
+  with_items:
+    - { json_file: ingress_request.json, csv_file: request.csv }
+    - { json_file: ingress_memory.json, csv_file: memory.csv}
+    - { json_file: ingress_cpu.json, csv_file: cpu.csv}
+
+
+
