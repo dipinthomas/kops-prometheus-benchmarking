@@ -3,7 +3,7 @@
   roles:
    - role: networking
    - role: state_store
-   #- role: create_cluster
+   - role: create_cluster
    - role: deployment
    - role: ingress_and_prometheus
    - role: benchmark
