@@ -1,6 +1,6 @@
 # Kubernetes Cluster & Prometheus
 
-This repository contains ansible scripts to deploya KOPS cluster, nginx ingress controller and it deploys a sample application. 
+This repository contains ansible playbooks to deploya KOPS cluster, nginx ingress controller and it deploys a sample application. 
 
 The ansible script will benchmark the cluster and the application against (Request Per Second) RPS & Throughput, with the help of prometheus we will have detailed insights into cluster resources. 
 
@@ -77,7 +77,7 @@ Last role to be executed is **generate_report**. CSV file will be created in the
 |*nginx_ingress_controller_nginx_process_cpu_seconds_total*|Extract ingres controller CPU usage|**cpu.csv**|
 
 ### How To Access Prometheus UI
-Using kubectl proxy tunnel is created directly from the system executing ansible scripts to prometheus service over port 9000.
+Using kubectl proxy tunnel is created directly from the system executing ansible playbooks to prometheus service over port 9000.
 
 After successful execution of ansible playbook you can access prometheus on [http://localhost:9000](http://localhost:9000)
 
