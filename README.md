@@ -12,7 +12,8 @@ The ansible script will benchmark the cluster and the application against (Reque
 * Linux(RHEL & Ubuntu) or Mac OS
 * pip3
 * AWS Account Credentials
-* Access to root user on the system. 
+* Access to root user on the system
+* Free system port 9000
 
 # Namespace Architecture
 
