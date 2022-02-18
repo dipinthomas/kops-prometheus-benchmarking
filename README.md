@@ -14,6 +14,9 @@ The ansible script will benchmark the cluster and the application against (Reque
 * AWS Account Credentials
 * Access to root user on the system. 
 
+# Namespace Architecture
+
+![namespace pod](/image/kops-ingress.png)
 
 ## Components Being Used
 
@@ -43,6 +46,7 @@ Ansible roles are being used to ensure reusability, summary of each role as belo
 |Kops & Kubectl|Install kops & kubectl |
 |Networking| Create AWS VPC & route54 internal hosted zone|
 |Stat Store| S3 bucket for KOPS to store its state file|
+
 
 
 ## How To Run
