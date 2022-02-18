@@ -100,8 +100,8 @@ To implement this task I have used many public resources, you can refer to the b
 
 # prometheus graphs
 
-![Ingress Requests](/images/ingress_requests.png?raw=true "Title") <!-- .element height="50%" width="50%" -->
+![Ingress Requests](/images/ingress_requests.png?raw=true "Ingress Requests") 
 
-![Ingress Memeory](/images/ingress_memory.png) {:height="36px" width="36px"} 
+![Ingress Memeory](/images/ingress_memory.png?raw=true "Ingress Memeory") 
 
-![Ingress CPU](/images/ingress_CPU.png?raw=true "Title") <!-- .element height="50%" width="50%" -->
+![Ingress CPU](/images/ingress_CPU.png?raw=true "Ingress CPU") 
