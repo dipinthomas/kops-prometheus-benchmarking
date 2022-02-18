@@ -1,0 +1,28 @@
+---    
+# Render templates
+
+- name: POD Deployment
+  template:
+    src: deployment.yaml.j2
+    dest: /tmp/deployment.yaml
+    mode: 0644
+  become: false
+
+- name: Deploy Foo & Bar Pod
+  command: "kubectl apply -f /tmp/deployment.yaml"
+
+- name: Extract Ingress Endpoint
+  command: "kubectl get ing foo-bar-ingress --output jsonpath='{.status.loadBalancer.ingress[0].hostname}'"
+  register: endpoint
+  until: endpoint.stdout is search('*.elb.amazonaws.com')
+
+- name: Export Ingress Endpoint
+  set_fact: ingress_endpoint="{{ endpoint.stdout }}"
+
+- name: print Endpoint
+  debug:
+    msg: "{{ endpoint }}"
+
+- name: print ingress_endpoint
+  debug:
+    msg: "{{ ingress_endpoint }}"

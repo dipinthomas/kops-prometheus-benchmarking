@@ -1,0 +1,36 @@
+# - name: Add Stable Helm Repo
+#   ansible.builtin.command: "helm repo add {{ item.name }} {{ item.url }}"
+#   with_items:
+#     - { name: 'nginx-stable', url: 'https://helm.nginx.com/stable' }
+#     - { name: 'prometheus-community', url: 'https://prometheus-community.github.io/helm-charts' }  
+
+# - name: Update Stable Helo Repo
+#   ansible.builtin.command: "helm repo add stable {{ chart_url }}"
+
+# - name: Helm Update Repo 
+#   ansible.builtin.command: helm repo update
+
+
+#   ansible.builtin.command: helm upgrade --install   nginx-stable/nginx-ingress --set prometheus.create=true --set prometheus.port=9901
+- name: Install Nginx 
+  ansible.builtin.command: helm upgrade --install "{{ ingress_chart_name }}" ingress-nginx \
+                           --repo https://kubernetes.github.io/ingress-nginx \
+                           --namespace "{{ ingress_namespace  }}" --create-namespace
+
+- name: Install Prometheus
+  ansible.builtin.command: helm upgrade --install "{{ prometheus_chart_name }}" kube-prometheus-stack \
+                           --repo https://prometheus-community.github.io/helm-charts \
+                           --namespace "{{ prometheus_namespace }}" --create-namespace
+
+- name: Update Ingress Metric Collection
+  ansible.builtin.command: helm upgrade --install "{{ ingress_chart_name }}" ingress-nginx --repo https://kubernetes.github.io/ingress-nginx \
+                        --namespace "{{ ingress_namespace  }}" --create-namespace \
+                        --set controller.metrics.enabled=true \
+                        --set controller.metrics.serviceMonitor.enabled=true \
+                        --set controller.metrics.serviceMonitor.additionalLabels.release="{{ prometheus_chart_name }}"
+                         
+- name: Update Prometheus Service Access
+  ansible.builtin.command: helm upgrade --install "{{ prometheus_chart_name }}" kube-prometheus-stack --repo 'https://prometheus-community.github.io/helm-charts' \
+                            --namespace "{{ prometheus_namespace  }}"  --create-namespace \
+                            --set prometheus.prometheusSpec.podMonitorSelectorNilUsesHelmValues=false \
+                            --set prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues=false

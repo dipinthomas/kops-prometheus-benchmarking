@@ -1,0 +1,84 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: foo
+  name: foo
+spec:
+  containers:
+  - image: hashicorp/http-echo
+    name: foo-app
+    args:
+       - "-text=foo"
+    livenessProbe:
+      httpGet:
+        path: /
+        port: 5678
+      initialDelaySeconds: 3
+      periodSeconds: 3
+    ports:
+    - containerPort: 5678
+  restartPolicy: Always
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: foo-service
+spec:
+  selector:
+    app: foo
+  ports:
+    - port: 80
+      targetPort: 5678
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: bar
+  name: bar
+spec:
+  containers:
+  - image: hashicorp/http-echo
+    name: bar-app
+    args:
+       - "-text=bar"
+    livenessProbe:
+      httpGet:
+        path: /
+        port: 5678
+    ports:
+    - containerPort: 5678
+  restartPolicy: Always
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: bar-service
+spec:
+  selector:
+    app: bar
+  ports:
+    - port: 80
+      targetPort: 5678
+  type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: foo-bar-ingress
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /$1
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - http:
+      paths:
+        - path: /foo
+          backend:
+            serviceName: foo-service
+            servicePort: 80
+        - path: /bar
+          backend:
+            serviceName: bar-service
+            servicePort: 80

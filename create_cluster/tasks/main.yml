@@ -1,0 +1,13 @@
+---
+# tasks file for create-cluster
+- name: Deploy Kops cluster
+  shell: "kops create cluster --yes  --cloud=aws --api-loadbalancer-class='network' --api-loadbalancer-type='public' --image {{ base_image }} --master-size={{ master_size }} --master-zones={{ master_zones|default(aws_zones) }} --master-count={{ master_count }} --master-volume-size={{ master_volume_size }} --vpc={{ privatevpc_id }}  --networking={{ kubernetes_networking }} --node-count={{ node_count }} --node-size={{ node_size }} --node-volume-size={{ node_volume_size }} --target=direct --dns=private --topology={{ topology }} --zones={{ aws_zones }} --ssh-public-key={{ ssh_public_key }} --name={{ cluster_name }} --state {{ state_store }} --authorization=rbac --encrypt-etcd-storage --kubernetes-version {{ kubernetes_version }} --cloud-labels=\"Application={{ tag_application }},CostCenter={{ tag_costcenter }},Product={{ tag_product }},Owner={{ tag_owner }},Environment={{ tag_environment }}\""
+
+- name: Export KubeConfig
+  shell: "kops export kubecfg --admin --state={{ state_store }}"
+
+- name: Validating Cluster Wait for 10-15 min
+  shell: "kops validate cluster {{ cluster_name }} --wait 10m"
+  register: validation_output
+  retries: 10
+  delay: 30

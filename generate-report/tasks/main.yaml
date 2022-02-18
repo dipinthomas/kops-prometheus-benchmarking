@@ -1,0 +1,9 @@
+- name: Estabilish Tunnel
+  shell: "nohup kubectl port-forward svc/prometheus-kube-prometheus-prometheus -n prometheus 9000:9090 </dev/null >/dev/null 2>&1 &"
+
+# - name: Export Reports
+#   shell: "curl http://localhost:9000/api/v1/query?query=nginx_ingress_controller_requests >> /tmp/report-ansible.csv"
+
+# Credit
+# https://www.robustperception.io/prometheus-query-results-as-csv
+

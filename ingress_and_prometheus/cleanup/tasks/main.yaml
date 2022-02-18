@@ -1,0 +1,6 @@
+
+- name: Uninstall Nginx Ingress 
+  ansible.builtin.command: helm  uninstall  "{{ ingress_chart_name }}"  -n "{{ ingress_namespace }}"
+
+- name: Uninstall Prometheus
+  ansible.builtin.command: helm uninstall "{{ prometheus_chart_name }}" -n "{{ prometheus_namespace }}"

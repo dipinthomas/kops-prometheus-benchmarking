@@ -1,0 +1,28 @@
+---
+- name: create VPC
+  ec2_vpc_net:
+    name: "{{ vpc_name }}"
+    cidr_block: "{{ network_cidr }}"
+    region: "{{ aws_region }}"
+    state: present
+  register: vpcdetails
+
+- name: Display all variables/facts known for a host
+  set_fact: privatevpc_id="{{ vpcdetails.vpc.id }}"
+  
+- name: create a private zone
+  community.aws.route53_zone:
+    zone: "{{ dns_zone }}"
+    vpc_id: "{{ vpcdetails.vpc.id }}"
+    vpc_region: "{{ aws_region }}"
+    comment: Private Host Zone
+
+ 
+- name: create IGW
+  ec2_vpc_igw:
+   vpc_id: "{{ vpcdetails.vpc.id }}"
+   region: "{{ aws_region }}"
+   state: "present"
+   tags:
+     Name: "{{ igw_name }}"
+  register: igw

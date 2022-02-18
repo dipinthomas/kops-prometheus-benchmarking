@@ -1,0 +1,52 @@
+- name: Install Benchmark Tool Darwin
+  command: brew install util-linux
+  when: ansible_os_family == 'Darwin'
+
+- name: Install Benchmark Tool Debian
+  apt: 
+    name: util-linux
+    state: present
+  become: yes
+  when: ansible_os_family == 'Debian'
+
+- name: Install Benchmark Tool RedHat
+  yum: 
+    name: util-linux
+    state: present
+  become: yes
+  when: ansible_os_family == 'RedHat'
+
+- name: install wrk
+  yum:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    #- groupinstall
+    #- "Development Tools"
+    - openssl-devel
+    - git
+    - make
+    - unzip
+    - gcc
+
+- name: Clone Git Repo
+  ansible.builtin.git:
+    repo: https://github.com/wg/wrk.git
+    dest: /tmp/wrk
+    single_branch: yes
+    version: master
+
+- name: Make wrk
+  shell: "cd /tmp/wrk && make"
+
+- name: Copy Binary
+  shell: cp /tmp/wrk/wrk /usr/local/bin/
+
+- name: Benchmark RPS  
+  command: taskset -c 0-21,44-65 wrk -t 44 -c 1000 -d 60s "http://{{ ingress_endpoint }}/bar"
+
+- name: Benchmark TPS
+  command: taskset -c 0-21,44-65 wrk -t 44 -c 1000 -d 60s -H ‘Connection\:\ Close’ https://{{ ingress_endpoint }}:443/bar
+
+- name: Benchmark Throughput
+  command: taskset -c 0-21,44-65 wrk -t 44 -c 1000 -d 60s https://{{ ingress_endpoint }}:443/bar/1mb.bin
